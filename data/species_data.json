@@ -15,6 +15,21 @@
         "diet": "Carnivore. Primary food sources include deer, wild boar, and water buffalo. They use ambush hunting strategies and are capable of taking down prey much larger than themselves.",
         "nature": "Generally shy and avoid human contact but become highly defensive and aggressive if threatened, cornered, or during mating season. Territorial and unpredictable when sick.",
         "habitat": "Tropical forests, mangroves, and grasslands. Apex predators regulating herbivore populations and maintaining ecological balance across the Indian subcontinent.",
+        "biometrics": {
+            "massRange": "90 - 310 kg",
+            "lifespan": "10 - 15 years",
+            "dimensions": "2.5 - 3.9 meters (Length)"
+        },
+        "threatDossier": {
+            "status": "Critically Vulnerable",
+            "primaryThreats": [
+                "Habitat Fragmentation",
+                "Poaching for skins/bones",
+                "Human-Wildlife Conflict"
+            ],
+            "protectionLevel": "Schedule I (WPA)"
+        },
+        "trophicLevel": "Apex Predator",
         "evsAlignment": "Biodiversity and species adaptation, Food webs and trophic relationships."
     },
     "peafowl": {
@@ -64,6 +79,20 @@
         "diet": "Ophiophagous (snake-eater). Feeds on rat snakes, small pythons, and other venomous snakes using neurotoxic venom.",
         "nature": "Highly intelligent and alert. Defensive but avoids humans; however, if cornered, it can deliver a massive amount of venom through its large fangs.",
         "habitat": "Dense forests, bamboo thickets, and near streams. Found across Southeast and South Asia. Roles include controlling other snake populations.",
+        "biometrics": {
+            "massRange": "Up to 6 kg",
+            "lifespan": "20+ years",
+            "dimensions": "3.1 - 4.0 meters (Average)"
+        },
+        "threatDossier": {
+            "status": "Vulnerable",
+            "primaryThreats": [
+                "Deforestation",
+                "Illegal harvest for skin/medicine"
+            ],
+            "protectionLevel": "International Trade Restrictions"
+        },
+        "trophicLevel": "Ophiophagous Predator",
         "evsAlignment": "Specialized predatory strategies, Biodiversity in reptiles."
     },
     "elephant": {
@@ -82,6 +111,21 @@
         "diet": "Herbivore. Consumes up to 150kg of vegetation daily, including grass, bark, roots, and fruits. Frequent water consumption required.",
         "nature": "Generally peaceful but can be extremely dangerous if provoked, in musth, or protecting young. Use vocalizations and low-frequency infrasound.",
         "habitat": "Forests, scrublands, and grasslands. Ecosystem engineers that create paths and disperse seeds over vast distances.",
+        "biometrics": {
+            "massRange": "2,000 - 5,000 kg",
+            "lifespan": "60 - 70 years",
+            "dimensions": "2.7 - 3.0 meters (Shoulder Height)"
+        },
+        "threatDossier": {
+            "status": "Endangered",
+            "primaryThreats": [
+                "Poaching for ivory",
+                "Habitat loss",
+                "Linear infrastructure barriers"
+            ],
+            "protectionLevel": "High Priority Conservation"
+        },
+        "trophicLevel": "Mega-Herbivore / Keystone Species",
         "evsAlignment": "Keystone species, Human-wildlife conflict management."
     },
     "leopard": {

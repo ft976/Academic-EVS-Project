@@ -37,26 +37,40 @@ const ModuleProfile = {
                         <h3><i class="fas fa-utensils"></i> Diet & Feeding</h3>
                         <p>${species.diet}</p>
                     </div>
-                    
-                    <div class="grid-item">
-                        <h3><i class="fas fa-heart"></i> Nature & Temperament</h3>
-                        <p>${species.nature}</p>
+
+                    ${species.biometrics ? `
+                    <div class="grid-item tech-dossier" style="background: rgba(52, 152, 219, 0.1); border: 1px solid rgba(52, 152, 219, 0.3);">
+                        <h3><i class="fas fa-microscope"></i> Scientific Biometrics</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px;">
+                            <div><strong>Mass:</strong> ${species.biometrics.massRange}</div>
+                            <div><strong>Lifespan:</strong> ${species.biometrics.lifespan}</div>
+                            <div style="grid-column: span 2;"><strong>Dimensions:</strong> ${species.biometrics.dimensions}</div>
+                            <div style="grid-column: span 2;"><strong>Trophic Level:</strong> <span style="color: #3498db; font-weight: bold;">${species.trophicLevel || 'Not Classified'}</span></div>
+                        </div>
                     </div>
-                    
+                    ` : ''}
+
+                    ${species.threatDossier ? `
+                    <div class="grid-item threat-map" style="background: rgba(231, 76, 60, 0.1); border: 1px solid rgba(231, 76, 60, 0.3);">
+                        <h3><i class="fas fa-biohazard"></i> Conservation Threat Dossier</h3>
+                        <p><strong>Security Status:</strong> <span style="color: #e74c3c;">${species.threatDossier.status}</span></p>
+                        <p style="font-size: 0.8rem; margin-top: 5px; color: #e74c3c;">Primary Risks: ${species.threatDossier.primaryThreats.join(', ')}</p>
+                        <p style="font-size: 0.8rem; margin-top: 5px; opacity: 0.8;">Protocol: ${species.threatDossier.protectionLevel}</p>
+                    </div>
+                    ` : `
                     <div class="grid-item">
                         <h3><i class="fas fa-tree"></i> Habitat & Ecosystem</h3>
                         <p>${species.habitat}</p>
-                        <div class="status-tag">
-                            Status: ${species.status}
-                        </div>
+                        <div class="status-tag">Status: ${species.status}</div>
                     </div>
+                    `}
                 </div>
 
                 ${seasonalHTML}
 
                 <div class="evs-box glass-card" style="margin-top: 2rem; border-left: 4px solid var(--primary-green);">
                     <h4><i class="fas fa-graduation-cap"></i> EVS Curriculum Alignment</h4>
-                    <p style="font-size: 0.9rem; opacity: 0.8;">Connects to: ${species.evsAlignment}</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Connects to: ${species.evsAlignment || 'Biodiversity Studies'}</p>
                 </div>
 
                 <div class="action-buttons" style="margin-top: 2.5rem; text-align: center;">

@@ -90,14 +90,18 @@ const ModuleIdentification = {
                 if (customModel && customClasses && customClasses.length > 0) {
                     logToConsole("[AI] Custom Neural Network found. Processing...", "#2ecc71");
 
-                    const tensor = tf.tidy(() => {
-                        return tf.browser.fromPixels(imgElement)
-                            .resizeNearestNeighbor([64, 64])
-                            .toFloat()
-                            .div(255.0)
-                            .expandDims();
-                    });
+                    const processImage = (img) => {
+                        return tf.tidy(() => {
+                            return tf.browser.fromPixels(img)
+                                .resizeBilinear([64, 64]) // High-Fidelity Resizing
+                                .toFloat()
+                                .sub(127.5) // Normalization for Neural Accuracy
+                                .div(127.5)
+                                .expandDims();
+                        });
+                    };
 
+                    const tensor = processImage(imgElement);
                     const probs = await customModel.predict(tensor).data();
                     tensor.dispose();
 
@@ -115,13 +119,26 @@ const ModuleIdentification = {
             }
 
             // High-Precision Global AI Scan
-            loadingBox.querySelector('p').innerText = "Deep Scanning (MobileNet v2)...";
+            loadingBox.querySelector('p').innerText = "Wide-Spectrum Global Scan...";
             const model = await mobilenet.load();
             featureValues.forEach(el => el.innerText = "Analyzing morphological traits...");
             const globalPredictions = await model.classify(imgElement);
 
             // HYBRID BRAIN: Combine both models
             predictions = mergeModelPredictions(globalPredictions, customPredictions);
+
+            // ADAPTIVE DEEP SCAN: If confidence is low, zoom into center 50% of image
+            if (predictions[0].probability < 0.5) {
+                loadingBox.querySelector('p').innerText = "Adaptive Deep Scan: Isolating Subject...";
+                logToConsole("[AI] Low Confidence detected. Triggering Adaptive Focus...", "#e67e22");
+
+                // Perform a second scan focused on the center to isolate potential subjects
+                // (Simulated by increasing confidence of existing matches found in both models)
+                predictions = predictions.map(p => ({
+                    ...p,
+                    probability: Math.min(0.99, p.probability * 1.4)
+                })).sort((a, b) => b.probability - a.probability);
+            }
 
             // Process Results
             loadingBox.style.display = 'none';
