@@ -194,12 +194,12 @@ const ModuleTraining = {
 
             log(`[ARCH] Compiled for ${numClasses} classes.`, '#9b59b6');
 
-            // 4. Smart Batch Training (Generator Pattern)
-            // To avoid OOM, we process classes in chunks
-            const TOTAL_EPOCHS = 10; // Reduced epochs per chunk for speed, but iterate more
-            const CHUNK_SIZE = 50; // Process 50 classes at a time
+            // 4. Smart Batch Training (Deep Cycle Optimization)
+            const TOTAL_EPOCHS = 25; // Significant increase for "Perfect" results
+            const CHUNK_SIZE = 40;
 
-            log(`[TRAIN] Starting Large-Scale Training Protocol...`, '#f1c40f');
+            log(`[TRAIN] Initiating Deep Neural Optimization (Epochs: ${TOTAL_EPOCHS})...`, '#f1c40f');
+            log("[TRAIN] Safety Buffer: Using hardware acceleration for tensor computation.", '#7f8c8d');
 
             // Shuffle classes to ensure random distribution
             // Fisher-Yates shuffle
@@ -286,7 +286,7 @@ const ModuleTraining = {
 
                 // Train on this batch
                 await model.fit(xs, ys, {
-                    epochs: 5, // Short fine-tuning per batch
+                    epochs: TOTAL_EPOCHS,
                     batchSize: 16,
                     shuffle: true,
                     callbacks: {
