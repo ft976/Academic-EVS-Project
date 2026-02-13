@@ -6,7 +6,8 @@ const ModuleUpload = {
                 <p>Upload a clear photograph of the animal for AI species identification and health awareness analysis.</p>
                 
                 <div class="upload-zone" id="drop-zone">
-                    <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary-green); margin-bottom: 1rem;"></i>
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <h3>Upload Wildlife Image</h3>
                     <p>Drag and drop image here or <strong>browse files</strong></p>
                     <input type="file" id="file-input" accept="image/*" style="display: none;">
                 </div>
@@ -16,8 +17,8 @@ const ModuleUpload = {
                         <img id="img-preview" class="preview-image">
                     </div>
                     <div id="image-quality-feedback" class="quality-feedback" style="display: none;"></div>
-                    <div class="action-buttons" style="margin-top: 1.5rem; display: flex; gap: 15px; justify-content: center;">
-                        <button id="change-image" class="secondary-btn" style="padding: 1.2rem 2rem;"><i class="fas fa-undo"></i> Try Another</button>
+                    <div class="action-buttons cta-group">
+                        <button id="change-image" class="secondary-btn"><i class="fas fa-undo"></i> Try Another</button>
                         <button id="confirm-upload" class="primary-btn">Analyze Image <i class="fas fa-microscope"></i></button>
                     </div>
                 </div>

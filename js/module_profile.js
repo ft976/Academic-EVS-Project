@@ -27,26 +27,26 @@ const ModuleProfile = {
                     </div>
                 </div>
 
-                <div class="profile-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div class="profile-section glass-card" style="padding: 1.5rem; background: rgba(255,255,255,0.05);">
+                <div class="profile-grid">
+                    <div class="grid-item">
                         <h3><i class="fas fa-users"></i> Habits & Behavior</h3>
                         <p>${species.behavior}</p>
                     </div>
                     
-                    <div class="profile-section glass-card" style="padding: 1.5rem; background: rgba(255,255,255,0.05);">
+                    <div class="grid-item">
                         <h3><i class="fas fa-utensils"></i> Diet & Feeding</h3>
                         <p>${species.diet}</p>
                     </div>
                     
-                    <div class="profile-section glass-card" style="padding: 1.5rem; background: rgba(255,255,255,0.05);">
+                    <div class="grid-item">
                         <h3><i class="fas fa-heart"></i> Nature & Temperament</h3>
                         <p>${species.nature}</p>
                     </div>
                     
-                    <div class="profile-section glass-card" style="padding: 1.5rem; background: rgba(255,255,255,0.05);">
+                    <div class="grid-item">
                         <h3><i class="fas fa-tree"></i> Habitat & Ecosystem</h3>
                         <p>${species.habitat}</p>
-                        <div class="status-tag" style="margin-top: 1rem; color: #ffab00; font-weight: 600;">
+                        <div class="status-tag">
                             Status: ${species.status}
                         </div>
                     </div>

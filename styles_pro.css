@@ -927,3 +927,158 @@ h3 i {
 .module-header h2 {
     margin: 0;
 }
+
+/* =========================================
+   STATUS TAG & ACTION BUTTONS
+   ========================================= */
+
+.status-tag {
+    margin-top: var(--space-2);
+    padding: 8px 16px;
+    background: rgba(255, 171, 0, 0.1);
+    border: 1px solid rgba(255, 171, 0, 0.3);
+    border-radius: var(--radius-sm);
+    color: #ffab00;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.action-buttons {
+    margin-top: var(--space-4);
+    text-align: center;
+}
+
+.action-buttons.cta-group {
+    margin-top: var(--space-3);
+}
+
+/* =========================================
+   SYMPTOM CHECKLIST
+   ========================================= */
+
+.symptom-checklist {
+    margin: var(--space-4) 0;
+}
+
+.symptom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-3);
+    margin: var(--space-3) 0;
+}
+
+.symptom-group {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+}
+
+.symptom-group h4 {
+    color: var(--primary);
+    margin-bottom: var(--space-2);
+    font-size: 1.1rem;
+}
+
+/* =========================================
+   QUALITY FEEDBACK
+   ========================================= */
+
+.quality-feedback {
+    margin-top: var(--space-3);
+    padding: var(--space-3);
+}
+
+.quality-checks {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.quality-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-sm);
+}
+
+.quality-status {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* =========================================
+   SEASONAL VARIATIONS
+   ========================================= */
+
+.seasonal-variations {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    background: rgba(155, 89, 182, 0.1);
+    border-left: 4px solid #9b59b6;
+    border-radius: var(--radius-md);
+}
+
+.seasonal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+}
+
+.season-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+}
+
+.season-item strong {
+    color: #9b59b6;
+    text-transform: capitalize;
+    display: block;
+    margin-bottom: var(--space-1);
+}
+
+/* =========================================
+   EVS BOX
+   ========================================= */
+
+.evs-box {
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+    border-left: 4px solid var(--primary);
+    background: rgba(5, 150, 105, 0.05);
+    border-radius: var(--radius-md);
+}
+
+.evs-box h4 {
+    color: var(--primary);
+    margin-bottom: var(--space-2);
+}
+
+/* =========================================
+   DISCLAIMER & INFO BOXES
+   ========================================= */
+
+.disclaimer-mini {
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+    border-left: 4px solid #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+}
+
+.validation-info {
+    margin-top: var(--space-4);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+.validation-info p {
+    margin-bottom: var(--space-1);
+}
