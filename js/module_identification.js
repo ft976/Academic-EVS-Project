@@ -152,6 +152,9 @@ const ModuleIdentification = {
     }
 };
 
+const RELEVANCE_WHITELIST = ['animal', 'bird', 'mammal', 'reptile', 'amphibian', 'fish', 'insect', 'wildlife', 'fauna', 'creature', 'species'];
+const INAPPROPRIATE_BLACKLIST = ['nipple', 'diaper', 'toilet', 'tissue', 'paper', 'mask', 'clothing', 'furniture', 'electronic', 'room', 'building', 'vehicle'];
+
 function displayResults(predictions, isCustom = false) {
     const resultsBox = document.getElementById('id-results');
     const speciesName = document.getElementById('species-name');
@@ -165,6 +168,31 @@ function displayResults(predictions, isCustom = false) {
     const topPrediction = predictions[0];
     const source = isCustom ? "Custom Model" : "MobileNet";
     rawPrediction.innerText = `${source} Class: "${topPrediction.className}" (Prob: ${(topPrediction.probability * 100).toFixed(2)}%)`;
+
+    // 1. RELEVANCE CHECK & BLACKLIST FILTER
+    const className = topPrediction.className.toLowerCase();
+    const isAppropriate = !INAPPROPRIATE_BLACKLIST.some(bad => className.includes(bad));
+
+    // Check if it's generally an animal/organism (ImageNet has many non-animal classes)
+    const isAnimal = checkIsAnimal(predictions.slice(0, 3));
+
+    if (!isAppropriate) {
+        showIndeterminateResult("Inappropriate Content Detected", "The AI model flagged this image as potentially containing inappropriate or non-wildlife content that violates the analysis policy.");
+        return;
+    }
+
+    // 2. DOMESTIC ANIMAL CHECK
+    const domesticMatch = checkDomesticAnimal(className);
+    if (domesticMatch) {
+        showDomesticResult(domesticMatch, topPrediction.probability);
+        return;
+    }
+
+    // 3. LOW CONFIDENCE CHECK
+    if (topPrediction.probability < 0.20 && !isCustom) {
+        showIndeterminateResult("Indeterminate Result", "The AI model is unable to identify this specimen with sufficient confidence. Please ensure the image is clear and focused.");
+        return;
+    }
 
     // Map to Internal Database OR Expanded Dataset
     let matchedKey = null;
@@ -205,7 +233,7 @@ function displayResults(predictions, isCustom = false) {
             // Dynamic Fallback: Check dataset manifest for any of the top predictions
             for (let p of topN) {
                 const sanitized = p.className.toLowerCase().replace(/\s+/g, '_').split(',')[0];
-                if (DATASET_MANIFEST && DATASET_MANIFEST[sanitized]) {
+                if (window.DATASET_MANIFEST && DATASET_MANIFEST[sanitized]) {
                     matchedKey = sanitized;
                     bestProb = p.probability;
                     matchSource = "manifest";
@@ -214,7 +242,7 @@ function displayResults(predictions, isCustom = false) {
 
                 // Try multi-word variations
                 const multiWord = p.className.toLowerCase().replace(/[^a-z0-9]/g, '_');
-                if (DATASET_MANIFEST && DATASET_MANIFEST[multiWord]) {
+                if (window.DATASET_MANIFEST && DATASET_MANIFEST[multiWord]) {
                     matchedKey = multiWord;
                     bestProb = p.probability;
                     matchSource = "manifest";
@@ -224,40 +252,40 @@ function displayResults(predictions, isCustom = false) {
         }
     }
 
-    // Final Fallback: Use top prediction but mark as uncertain
-    if (!matchedKey) {
+    // Final Fallback: Non-wildlife but animal detected in ImageNet
+    if (!matchedKey && isAnimal) {
         matchedKey = topPrediction.className.split(',')[0].toLowerCase().replace(/\s+/g, '_');
-        bestProb = topPrediction.probability * 0.7; // Reduce confidence for uncertain matches
+        bestProb = topPrediction.probability * 0.8;
         matchSource = "uncertain";
+    }
+
+    // If still no key and not clearly an animal, fail
+    if (!matchedKey) {
+        showIndeterminateResult("Non-Wildlife Detected", "The subject does not appear to be a wildlife species in our database. It may be a domestic animal or an inanimate object.");
+        return;
     }
 
     // Prepare Display Data
     let finalSpecies = null;
     let finalConfidence = Math.round(bestProb * 100);
 
-    // Only boost confidence slightly if it's very close to a threshold
-    if (finalConfidence >= 70 && finalConfidence < 75) {
-        finalConfidence += 3; // Small boost for borderline cases
-    }
-    if (finalConfidence > 99) finalConfidence = 99;
-
-    if (AppState.speciesData[matchedKey]) {
+    if (AppState.speciesData && AppState.speciesData[matchedKey]) {
         finalSpecies = AppState.speciesData[matchedKey];
     } else {
-        // DYNAMIC PROFILE GEN for species in manifest or unknown birds/animals
+        // DYNAMIC PROFILE GEN
         const formattedName = matchedKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         finalSpecies = {
             commonName: formattedName,
-            scientificName: "Classified via Neural Network",
-            taxonomy: "Wildlife Identification",
-            description: `This specimen has been identified as a ${formattedName} using the expanded visual recognition database.`,
+            scientificName: "Classified via Neural Network (MobileNet)",
+            taxonomy: "Wildlife Identification / Fauna",
+            description: `This specimen has been identified as a ${formattedName} using the AI visual recognition engine. It is likely a wild species.`,
             safetyType: "low",
             group: "Detected Fauna",
-            behavior: "Aggregation of behavior patterns for this species is ongoing.",
-            diet: "Dietary habits vary based on specific environmental factors.",
+            behavior: "Behavior reflects standard patterns for similar species in this group.",
+            diet: "Natural foraging or predatory diet.",
             nature: "Wild",
-            habitat: "Natural ecosystems suitable for this species.",
-            status: "Observation Required",
+            habitat: "Natural ecosystems/Wildlands.",
+            status: "Identification Verified",
             evsAlignment: "Biodiversity awareness and species conservation."
         };
     }
@@ -270,13 +298,35 @@ function displayResults(predictions, isCustom = false) {
 
     // Show confidence with quality indicator
     const qualityIndicators = {
-        'custom': '🎯 High',
-        'mapped': '✓ Good',
-        'manifest': '~ Fair',
-        'uncertain': '? Low'
+        'custom': '🎯 HIGH PRECISION',
+        'mapped': '✓ VERIFIED MATCH',
+        'manifest': '~ DATABASE MATCH',
+        'uncertain': '⚠ LOW CONFIDENCE'
     };
-    const qualityText = qualityIndicators[matchSource] || '~ Fair';
-    confidenceValue.innerHTML = `${finalConfidence}% <span style="font-size: 0.7rem; opacity: 0.7; margin-left: 8px;">(${qualityText})</span>`;
+
+    let qualityColor = "var(--primary-green)";
+    if (finalConfidence < 40) qualityColor = "#f1c40f";
+    if (matchSource === 'uncertain') qualityColor = "#e67e22";
+
+    const qualityText = qualityIndicators[matchSource] || '~ DATABASE MATCH';
+    confidenceValue.innerHTML = `${finalConfidence}% <span style="font-size: 0.7rem; opacity: 0.7; margin-left: 8px; color: ${qualityColor}">(${qualityText})</span>`;
+    confidenceValue.closest('.confidence-badge').style.background = qualityColor;
+    confidenceValue.closest('.confidence-badge').style.color = finalConfidence < 60 ? "#000" : "#000";
+
+    // Update Uncertainty Notice
+    const notice = document.querySelector('.uncertainty-notice');
+    if (finalConfidence < 60) {
+        notice.style.background = 'rgba(230, 126, 34, 0.1)';
+        notice.style.borderLeftColor = '#e67e22';
+        notice.querySelector('h5').innerText = "LOW CONFIDENCE WARNING";
+        notice.querySelector('h5').style.color = '#e67e22';
+        notice.querySelector('p').innerText = "The model is uncertain about this match. Please verify with a clearer image or consult a specialist if safety is a concern.";
+    } else {
+        notice.style.background = 'rgba(46, 204, 113, 0.1)';
+        notice.style.borderLeftColor = 'var(--primary-green)';
+        notice.querySelector('h5').innerText = "Confidence Confirmation";
+        notice.querySelector('h5').style.color = 'var(--primary-green)';
+    }
 
     // Features
     const features = generateIdentificationFeatures(matchedKey);
@@ -286,7 +336,7 @@ function displayResults(predictions, isCustom = false) {
     alternativeList.innerHTML = predictions.slice(0, 3).map(p => `
         <div class="alternative-item glass-card" style="padding: 1rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);">
             <div>
-                <span style="font-weight: 600; text-transform: capitalize;">${p.className}</span>
+                <span style="font-weight: 600; text-transform: capitalize;">${p.className.split(',')[0]}</span>
                 <span style="font-size: 0.8rem; opacity: 0.6; margin-left: 5px;">(AI Class)</span>
             </div>
             <span style="background: rgba(0, 242, 96, 0.1); color: var(--primary-green); padding: 4px 12px; border-radius: 15px; font-size: 0.85rem;">
@@ -301,6 +351,99 @@ function displayResults(predictions, isCustom = false) {
     document.getElementById('view-profile').addEventListener('click', () => {
         nextStep();
     });
+}
+
+function showIndeterminateResult(title, message) {
+    const resultsBox = document.getElementById('id-results');
+    resultsBox.innerHTML = `
+        <div class="indeterminate-result glass-card" style="padding: 2rem; border-left: 4px solid #e74c3c; background: rgba(231, 76, 60, 0.1);">
+            <h3 style="color: #e74c3c; margin-bottom: 1rem;"><i class="fas fa-times-circle"></i> ${title}</h3>
+            <p style="margin-bottom: 2rem; line-height: 1.6;">${message}</p>
+            <button onclick="location.reload()" class="secondary-btn"><i class="fas fa-undo"></i> Try Different Image</button>
+        </div>
+    `;
+    resultsBox.style.display = 'block';
+}
+
+function showDomesticResult(type, prob) {
+    const resultsBox = document.getElementById('id-results');
+    const confidence = Math.round(prob * 100);
+
+    AppState.identifiedSpecies = {
+        commonName: type.charAt(0).toUpperCase() + type.slice(1),
+        scientificName: "Domestic Species",
+        taxonomy: "Domesticated Fauna",
+        description: `This animal has been identified as a domesticated ${type}. The system focuses on wild species identification. For health advice regarding domestic pets, please consult a veterinarian.`,
+        safetyType: "low",
+        group: "Domestic Animal",
+        behavior: "Household/Farm animal behaviors.",
+        diet: "Provided/Commercial feed.",
+        nature: "Domestic",
+        habitat: "Human environments.",
+        status: "Non-Wildlife",
+        evsAlignment: "Species categorization and distinction."
+    };
+
+    resultsBox.innerHTML = `
+        <div class="domestic-result glass-card" style="padding: 2rem; border-left: 4px solid #3498db; background: rgba(52, 152, 219, 0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                <div>
+                    <span class="label" style="font-size: 0.8rem; opacity: 0.7;">DOMESTIC SPECIES DETECTED</span>
+                    <h3 style="color: #3498db; font-size: 2rem; margin-top: 0.5rem;">${AppState.identifiedSpecies.commonName}</h3>
+                </div>
+                <div style="background: #3498db; color: #fff; padding: 10px 20px; border-radius: 25px; font-weight: 700;">
+                    ${confidence}% Confidence
+                </div>
+            </div>
+            
+            <p style="margin-bottom: 1.5rem; line-height: 1.6; opacity: 0.9;">
+                The AI identifies this as a <strong>domestic animal</strong>. Our system primary focuses on wildlife conservation and awareness. 
+                Domestic animals like dogs and cats are not considered wildlife in the context of ecological monitoring.
+            </p>
+
+            <div class="notice" style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+                <p style="font-size: 0.9rem;"><i class="fas fa-info-circle"></i> View the profile for basic categorization, or try another image if you intended to analyze a wild species.</p>
+            </div>
+
+            <div class="action-buttons">
+                <button id="view-profile" class="primary-btn">View Categorization <i class="fas fa-arrow-right"></i></button>
+                <button onclick="location.reload()" class="secondary-btn" style="margin-left: 10px;"><i class="fas fa-undo"></i> Try Wildlife</button>
+            </div>
+        </div>
+    `;
+    resultsBox.style.display = 'block';
+
+    document.getElementById('view-profile').addEventListener('click', () => {
+        nextStep();
+    });
+}
+
+function checkIsAnimal(topPredictions) {
+    // Basic heuristics for ImageNet animal groups
+    const animalTerms = ['dog', 'cat', 'bird', 'fish', 'reptile', 'snake', 'lizard', 'monkey', 'ape', 'bear', 'deer', 'animal', 'fauna', 'creature', 'insect', 'butterfly', 'moth', 'shell', 'crab', 'wolf', 'lion', 'tiger', 'leopard', 'elephant', 'rhino'];
+    return topPredictions.some(p => {
+        const title = p.className.toLowerCase();
+        return animalTerms.some(term => title.includes(term));
+    });
+}
+
+function checkDomesticAnimal(className) {
+    const c = className.toLowerCase();
+    const domesticKeywords = {
+        'dog': ['terrier', 'retriever', 'spaniel', 'collie', 'hound', 'bulldog', 'toy dog', 'sheepdog', 'poodle', 'chow', 'malamute', 'kelpie', 'pug', 'chihuahua', 'dog'],
+        'cat': ['siamese cat', 'persian cat', 'tabby cat', 'egyptian cat', 'tiger cat', 'domestic cat', 'tortoiseshell'],
+        'cow': ['ox', 'cow', 'cattle', 'bull'],
+        'horse': ['horse', 'stallion', 'mare', 'pony'],
+        'sheep': ['sheep', 'lamb', 'ram'],
+        'goat': ['goat'],
+        'chicken': ['chicken', 'hen', 'rooster'],
+        'pig': ['pig', 'hog']
+    };
+
+    for (let [type, keywords] of Object.entries(domesticKeywords)) {
+        if (keywords.some(k => c.includes(k))) return type;
+    }
+    return null;
 }
 
 function mapToInternalSpecies(className) {
