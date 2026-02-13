@@ -1,0 +1,808 @@
+/* =========================================
+   PROFESSIONAL DESIGN SYSTEM
+   Clean, Modern, Simple
+   ========================================= */
+
+:root {
+    /* Refined Color Palette */
+    --primary: #059669;
+    --primary-light: #10b981;
+    --primary-dark: #047857;
+    --accent: #06b6d4;
+    --accent-light: #22d3ee;
+
+    /* Neutrals */
+    --bg-dark: #0a0a0a;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --bg-card-hover: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(5, 150, 105, 0.3);
+
+    /* Text */
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-tertiary: #9ca3af;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+    /* Typography */
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-heading: 'Poppins', var(--font-body);
+
+    /* Spacing (8px grid) */
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-6: 48px;
+    --space-8: 64px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+}
+
+/* =========================================
+   BASE STYLES
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 17px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================
+   TYPOGRAPHY
+   ========================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.25rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* =========================================
+   LAYOUT
+   ========================================= */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-2) var(--space-4);
+}
+
+header nav {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.logo i {
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+.academic-tag {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-3);
+}
+
+/* =========================================
+   CARDS & CONTAINERS
+   ========================================= */
+
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: all 0.2s ease;
+}
+
+.glass-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+button {
+    font-family: var(--font-body);
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.primary-btn {
+    background: var(--primary);
+    color: white;
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+}
+
+.primary-btn:hover {
+    background: var(--primary-light);
+    box-shadow: var(--shadow-md);
+}
+
+.primary-btn:active {
+    transform: scale(0.98);
+}
+
+.secondary-btn {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+}
+
+.secondary-btn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+}
+
+/* =========================================
+   WELCOME SCREEN
+   ========================================= */
+
+.welcome-screen {
+    text-align: center;
+    padding: var(--space-8) var(--space-3);
+}
+
+.welcome-screen h1 {
+    font-size: 3.5rem;
+    margin-bottom: var(--space-3);
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.welcome-screen p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-6);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-group {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* =========================================
+   UPLOAD MODULE
+   ========================================= */
+
+.upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: var(--bg-card);
+}
+
+.upload-zone:hover,
+.upload-zone.drag-over {
+    border-color: var(--primary);
+    background: rgba(5, 150, 105, 0.05);
+}
+
+.upload-icon {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: var(--space-2);
+}
+
+.upload-zone h3 {
+    margin-bottom: var(--space-1);
+    color: var(--text-primary);
+}
+
+.upload-zone p {
+    color: var(--text-tertiary);
+    font-size: 0.95rem;
+}
+
+/* =========================================
+   RESULTS & IDENTIFICATION
+   ========================================= */
+
+.preview-container {
+    max-width: 600px;
+    margin: var(--space-4) auto;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+}
+
+.preview-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+}
+
+.results-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    margin: var(--space-3) 0;
+}
+
+.species-name {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-light);
+    margin-bottom: var(--space-1);
+}
+
+.scientific-name {
+    font-size: 1.1rem;
+    color: var(--text-tertiary);
+    font-style: italic;
+    margin-bottom: var(--space-3);
+}
+
+.confidence-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(5, 150, 105, 0.1);
+    border: 1px solid rgba(5, 150, 105, 0.3);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    color: var(--primary-light);
+}
+
+/* =========================================
+   GRIDS
+   ========================================= */
+
+.profile-grid,
+.symptom-grid,
+.guidance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-3);
+    margin: var(--space-4) 0;
+}
+
+.grid-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    transition: all 0.2s ease;
+}
+
+.grid-item:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+}
+
+.grid-item h3 {
+    color: var(--primary);
+    margin-bottom: var(--space-2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* =========================================
+   CHECKBOXES
+   ========================================= */
+
+.check-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.check-item:hover {
+    background: rgba(5, 150, 105, 0.05);
+}
+
+.check-item input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.check-item input[type="checkbox"]:checked {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.check-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    display: block;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px;
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .welcome-screen h1 {
+        font-size: 2.5rem;
+    }
+
+    header nav {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .glass-card {
+        padding: var(--space-4);
+    }
+
+    .profile-grid,
+    .symptom-grid,
+    .guidance-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-2);
+    }
+
+    .cta-group {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+
+    .glass-card {
+        padding: var(--space-3);
+    }
+
+    main {
+        padding: var(--space-4) var(--space-2);
+    }
+}
+
+/* =========================================
+   UTILITIES
+   ========================================= */
+
+.text-center {
+    text-align: center;
+}
+
+.mb-2 {
+    margin-bottom: var(--space-2);
+}
+
+.mb-3 {
+    margin-bottom: var(--space-3);
+}
+
+.mb-4 {
+    margin-bottom: var(--space-4);
+}
+
+.mt-4 {
+    margin-top: var(--space-4);
+}
+
+.hidden {
+    display: none;
+}
+/* =========================================
+   BACKGROUND EFFECTS
+   ========================================= */
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(5, 150, 105, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Subtle animated gradient mesh */
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: linear-gradient(
+        135deg,
+        rgba(5, 150, 105, 0.03) 0%,
+        rgba(10, 10, 10, 0) 50%,
+        rgba(6, 182, 212, 0.03) 100%
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+    pointer-events: none;
+}
+
+/* =========================================
+   BACK BUTTON
+   ========================================= */
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: var(--space-3);
+}
+
+.back-button:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    transform: translateX(-2px);
+}
+
+.back-button i {
+    font-size: 0.9rem;
+}
+
+/* Module header with back button */
+.module-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+}
+
+.module-header h2 {
+    margin: 0;
+}
+
+/* =========================================
+   ENHANCED CARDS WITH SUBTLE EFFECTS
+   ========================================= */
+
+.glass-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(5, 150, 105, 0.3),
+        transparent
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.glass-card:hover::before {
+    opacity: 1;
+}
+
+/* Subtle shine effect on hover */
+.primary-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.primary-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.primary-btn:hover::before {
+    left: 100%;
+}
+
+/* =========================================
+   FIXED SHAPES & SIZES
+   ========================================= */
+
+/* Better Card Proportions */
+.glass-card {
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 400px;
+}
+
+/* Consistent Button Sizes */
+.primary-btn,
+.secondary-btn {
+    min-width: 140px;
+    height: 48px;
+    padding: 0 32px;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Upload Zone Better Size */
+.upload-zone {
+    min-height: 300px;
+    max-width: 600px;
+    margin: var(--space-4) auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Preview Container Fixed Size */
+.preview-container {
+    max-width: 700px;
+    margin: var(--space-4) auto;
+}
+
+.preview-image {
+    max-height: 500px;
+    width: 100%;
+    object-fit: contain;
+}
+
+/* Results Card Better Proportions */
+.results-card {
+    max-width: 800px;
+    margin: var(--space-4) auto;
+}
+
+/* Grid Items Consistent Size */
+.grid-item {
+    min-height: 200px;
+}
+
+/* Header Proper Height */
+header {
+    min-height: 70px;
+}
+
+/* Welcome Screen Better Spacing */
+.welcome-screen {
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome-screen h1 {
+    font-size: 3rem;
+    max-width: 800px;
+}
+
+.welcome-screen p {
+    max-width: 600px;
+    font-size: 1.1rem;
+}
+
+/* Back Button Proper Size */
+.back-button {
+    height: 40px;
+    padding: 0 20px;
+}
+
+/* Checkbox Consistent Size */
+.check-item input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+/* Icon Sizes */
+.upload-icon {
+    font-size: 4rem !important;
+}
+
+h2 i,
+h3 i {
+    font-size: 0.9em;
+    margin-right: 8px;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .glass-card {
+        min-height: auto;
+    }
+    
+    .welcome-screen {
+        min-height: 400px;
+    }
+    
+    .welcome-screen h1 {
+        font-size: 2.5rem;
+    }
+    
+    .upload-zone {
+        min-height: 250px;
+    }
+    
+    .preview-image {
+        max-height: 400px;
+    }
+}

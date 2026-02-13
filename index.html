@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Wildlife Awareness & EVS Education</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles_pro.css">
+    <!-- TensorFlow.js for Real In-Browser Training -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+    <script src="js/dataset_manifest.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>EcoGuardian AI</span>
+            </div>
+            <div class="academic-tag">Academic EVS Project</div>
+        </nav>
+    </header>
+
+    <main id="app-container">
+        <!-- Dashboard / Entry Point -->
+        <section id="module-container" class="glass-card">
+            <div id="active-module-content">
+                <!-- Content injected here by JS -->
+                <div class="welcome-screen">
+                    <h1>AI-Powered Wildlife Awareness</h1>
+                    <p>Identify species, learn about ecology, and understand wildlife health and safety.</p>
+                    <div class="cta-group">
+                        <button id="start-btn" class="primary-btn">Begin Analysis <i
+                                class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="main-footer">
+        <!-- Disclaimer will be shown here at the end -->
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/module_upload.js"></script>
+    <script src="js/module_identification.js"></script>
+    <script src="js/module_profile.js"></script>
+    <script src="js/module_health.js"></script>
+    <script src="js/module_safety.js"></script>
+    <script src="js/module_disclaimer.js"></script>
+    <script src="js/module_training.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
