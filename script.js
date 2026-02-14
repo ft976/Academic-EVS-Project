@@ -30,6 +30,34 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderModule();
         });
     }
+
+    // Setup navigation buttons
+    const navHome = document.getElementById('nav-home');
+    const navTraining = document.getElementById('nav-training');
+
+    if (navHome) {
+        navHome.addEventListener('click', () => {
+            // RESET STATE for fresh upload
+            AppState.currentStep = 0;
+            AppState.uploadedImage = null;
+            AppState.identifiedSpecies = null;
+            AppState.selectedSymptoms = [];
+
+            navHome.classList.add('active');
+            if (navTraining) navTraining.classList.remove('active');
+            renderModule();
+        });
+    }
+
+    if (navTraining) {
+        navTraining.addEventListener('click', () => {
+            // Switch to training module
+            AppState.currentStep = -1; // Special step for training
+            navTraining.classList.add('active');
+            if (navHome) navHome.classList.remove('active');
+            renderTrainingModule();
+        });
+    }
 });
 
 // Update Step Indicator
@@ -37,22 +65,6 @@ function updateStepIndicator() {
     stepIndicators.forEach((step, index) => {
         step.classList.toggle('active', index === AppState.currentStep);
         step.classList.toggle('completed', index < AppState.currentStep);
-    });
-}
-
-const navHome = document.getElementById('nav-home');
-const navTraining = document.getElementById('nav-training');
-
-if (navHome) {
-    navHome.addEventListener('click', () => {
-        // RESET STATE for fresh upload
-        AppState.currentStep = 0;
-        AppState.uploadedImage = null;
-        AppState.identifiedSpecies = null;
-        AppState.selectedSymptoms = [];
-
-        navHome.classList.add('active');
-        renderModule();
     });
 }
 
@@ -131,4 +143,28 @@ function addBackButton(container, targetStep = null) {
     const backBtn = createBackButton(targetStep);
     const firstChild = container.firstChild;
     container.insertBefore(backBtn, firstChild);
+}
+
+// Render Training Module
+function renderTrainingModule() {
+    appContainer.innerHTML = '';
+
+    // Hide step indicator for training
+    const indicator = document.querySelector('.step-indicator');
+    if (indicator) {
+        indicator.style.display = 'none';
+    }
+
+    // Render training module
+    if (typeof ModuleTraining !== 'undefined') {
+        ModuleTraining.render(appContainer);
+    } else {
+        appContainer.innerHTML = `
+            <div class="glass-card" style="padding: 2rem; text-align: center;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #e67e22; margin-bottom: 1rem;"></i>
+                <h2>Training Module Not Loaded</h2>
+                <p>Please refresh the page to load the training module.</p>
+            </div>
+        `;
+    }
 }
