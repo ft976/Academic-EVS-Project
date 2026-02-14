@@ -94,69 +94,86 @@ const ModuleHealth = {
         });
 
         function performAssessment(values) {
-            // Comprehensive differential diagnosis database
+            // Comprehensive differential diagnosis database with detailed reasoning
             const differentialDiagnoses = {
                 trauma: {
                     conditions: [
-                        { name: "Physical Trauma/Injury", probability: 85, reasoning: "Multiple physical symptoms suggest external injury" },
-                        { name: "Fracture or Bone Damage", probability: 65, reasoning: "Limping combined with swelling indicates possible fracture" },
-                        { name: "Soft Tissue Damage", probability: 70, reasoning: "Swelling and wounds suggest soft tissue injury" }
+                        { name: "Physical Trauma/Injury", probability: 85, reasoning: "Multiple physical symptoms (wounds, bleeding, limping) suggest external injury from collision, fall, or predator attack" },
+                        { name: "Fracture or Bone Damage", probability: 65, reasoning: "Limping combined with swelling and abnormal gait indicates possible fracture or joint damage" },
+                        { name: "Soft Tissue Damage", probability: 70, reasoning: "Swelling, wounds, and bruising suggest soft tissue injury (contusion, sprain, or laceration)" },
+                        { name: "Burn or Thermal Injury", probability: 45, reasoning: "Skin lesions or discoloration may indicate exposure to heat, chemicals, or fire" }
                     ],
                     category: "Physical Trauma or Injury"
                 },
                 infection: {
                     conditions: [
-                        { name: "Bacterial Infection", probability: 72, reasoning: "Lesions combined with discharge suggest bacterial involvement" },
-                        { name: "Fungal Infection", probability: 55, reasoning: "Skin lesions and hair loss may indicate fungal disease" },
-                        { name: "Viral Disease", probability: 45, reasoning: "Multiple systemic symptoms could indicate viral illness" },
-                        { name: "Septicemia", probability: 35, reasoning: "Severe lethargy with fever signs may indicate blood infection" }
+                        { name: "Bacterial Infection", probability: 72, reasoning: "Lesions, discharge, and swelling suggest bacterial involvement, possibly from wound contamination" },
+                        { name: "Fungal Infection", probability: 55, reasoning: "Skin lesions, hair loss, and crusty areas may indicate fungal disease (such as ringworm or aspergillosis)" },
+                        { name: "Viral Disease", probability: 45, reasoning: "Multiple systemic symptoms (lethargy, disorientation, respiratory issues) could indicate viral illness" },
+                        { name: "Septicemia", probability: 35, reasoning: "Severe lethargy with fever signs may indicate blood infection (sepsis) from untreated wounds" }
                     ],
                     category: "Possible Infection or Disease"
                 },
                 neurological: {
                     conditions: [
-                        { name: "Head Trauma", probability: 60, reasoning: "Circling and disorientation suggest neurological involvement" },
-                        { name: "Poisoning/Toxin Exposure", probability: 50, reasoning: "Neurological symptoms can indicate toxin ingestion" },
-                        { name: "Encephalitis/Meningitis", probability: 40, reasoning: "Brain inflammation can cause disorientation" },
-                        { name: "Lead Poisoning", probability: 30, reasoning: "Common in birds near areas with lead exposure" }
+                        { name: "Head Trauma", probability: 60, reasoning: "Circling, disorientation, and abnormal posture suggest neurological involvement from head injury" },
+                        { name: "Poisoning/Toxin Exposure", probability: 50, reasoning: "Neurological symptoms (tremors, seizures, disorientation) can indicate toxin ingestion (pesticides, heavy metals, or toxic plants)" },
+                        { name: "Encephalitis/Meningitis", probability: 40, reasoning: "Brain or spinal cord inflammation can cause disorientation, lethargy, and neurological deficits" },
+                        { name: "Lead Poisoning", probability: 30, reasoning: "Common in birds near areas with lead exposure (paint, fishing weights, ammunition)" }
                     ],
                     category: "Neurological or Behavioral Indicators"
                 },
                 metabolic: {
                     conditions: [
-                        { name: "Severe Malnutrition", probability: 75, reasoning: "Emaciation and weakness indicate nutritional deficiency" },
-                        { name: "Metabolic Bone Disease", probability: 55, reasoning: "Common in captive birds/reptiles with calcium deficiency" },
-                        { name: "Organ Failure (Liver/Kidney)", probability: 45, reasoning: "Chronic illness can cause emaciation" },
-                        { name: "Hypoglycemia", probability: 40, reasoning: "Low blood sugar can cause weakness and disorientation" }
+                        { name: "Severe Malnutrition", probability: 75, reasoning: "Emaciation, weakness, and visible ribs indicate significant nutritional deficiency" },
+                        { name: "Metabolic Bone Disease", probability: 55, reasoning: "Common in captive birds/reptiles with calcium or vitamin D3 deficiency, causing bone weakness" },
+                        { name: "Organ Failure (Liver/Kidney)", probability: 45, reasoning: "Chronic illness or toxin exposure can cause organ failure, resulting in emaciation and lethargy" },
+                        { name: "Hypoglycemia", probability: 40, reasoning: "Low blood sugar can cause weakness, disorientation, and trembling" }
                     ],
                     category: "Nutritional or Metabolic Concerns"
                 },
                 parasitic: {
                     conditions: [
-                        { name: "External Parasite Infestation", probability: 80, reasoning: "Visible parasites and scratching confirm infestation" },
-                        { name: "Internal Parasite Load", probability: 60, reasoning: "Weight loss despite feeding suggests internal parasites" },
-                        { name: "Mite/Lice Infestation", probability: 70, reasoning: "Common cause of feather/hair loss and scratching" },
-                        { name: "Tick-Borne Disease", probability: 45, reasoning: "Ticks can transmit various diseases" }
+                        { name: "External Parasite Infestation", probability: 80, reasoning: "Visible parasites (ticks, fleas) and scratching confirm infestation" },
+                        { name: "Internal Parasite Load", probability: 60, reasoning: "Weight loss despite feeding, lethargy, and diarrhea suggest internal parasites (worms, protozoa)" },
+                        { name: "Mite/Lice Infestation", probability: 70, reasoning: "Common cause of feather/hair loss, skin irritation, and scratching" },
+                        { name: "Tick-Borne Disease", probability: 45, reasoning: "Ticks can transmit various diseases (Lyme disease, ehrlichiosis, babesiosis)" }
                     ],
                     category: "Parasitic Infestation"
                 },
                 respiratory: {
                     conditions: [
-                        { name: "Respiratory Infection", probability: 78, reasoning: "Labored breathing and discharge indicate respiratory issue" },
-                        { name: "Pneumonia", probability: 55, reasoning: "Severe breathing difficulty may indicate lung infection" },
-                        { name: "Air Sac Disease (Birds)", probability: 50, reasoning: "Specific to avian species" },
-                        { name: "Aspergillosis (Fungal)", probability: 40, reasoning: "Common fungal respiratory disease in birds" }
+                        { name: "Respiratory Infection", probability: 78, reasoning: "Labored breathing and discharge indicate respiratory issue (bacterial, viral, or fungal)" },
+                        { name: "Pneumonia", probability: 55, reasoning: "Severe breathing difficulty, cough, and discharge may indicate lung infection" },
+                        { name: "Air Sac Disease (Birds)", probability: 50, reasoning: "Specific to avian species, causing respiratory distress and air sac inflammation" },
+                        { name: "Aspergillosis (Fungal)", probability: 40, reasoning: "Common fungal respiratory disease in birds, affecting air sacs and lungs" }
                     ],
                     category: "Respiratory Condition"
                 },
                 environmental: {
                     conditions: [
-                        { name: "Hypothermia", probability: 65, reasoning: "Cold to touch with lethargy suggests temperature exposure" },
-                        { name: "Heat Stroke", probability: 50, reasoning: "Overheating can cause disorientation and distress" },
-                        { name: "Dehydration", probability: 75, reasoning: "Sunken eyes and lethargy indicate dehydration" },
-                        { name: "Capture Myopathy", probability: 45, reasoning: "Stress-induced muscle damage from handling" }
+                        { name: "Hypothermia", probability: 65, reasoning: "Cold to touch with lethargy suggests exposure to extreme cold temperatures" },
+                        { name: "Heat Stroke", probability: 50, reasoning: "Overheating can cause disorientation, lethargy, and neurological symptoms" },
+                        { name: "Dehydration", probability: 75, reasoning: "Sunken eyes, lethargy, and dry mucous membranes indicate dehydration" },
+                        { name: "Capture Myopathy", probability: 45, reasoning: "Stress-induced muscle damage from handling or capture, causing weakness and immobility" }
                     ],
                     category: "Environmental Stress Factors"
+                },
+                reproductive: {
+                    conditions: [
+                        { name: "Egg Binding", probability: 60, reasoning: "Abnormal posture, lethargy, and straining in female birds suggest egg binding" },
+                        { name: "Reproductive Tumor", probability: 45, reasoning: "Swelling, lethargy, and abnormal behavior may indicate reproductive system tumor" },
+                        { name: "Mating-Related Injury", probability: 50, reasoning: "Wounds or trauma in genital area suggest injury during mating" }
+                    ],
+                    category: "Reproductive System Concerns"
+                },
+                dermatological: {
+                    conditions: [
+                        { name: "Allergic Reaction", probability: 55, reasoning: "Rashes, itching, and skin inflammation may indicate allergic reaction to food, environment, or parasites" },
+                        { name: "Skin Cancer", probability: 35, reasoning: "Persistent skin lesions, especially in sun-exposed areas, may indicate skin cancer" },
+                        { name: "Autoimmune Skin Disease", probability: 40, reasoning: "Chronic skin lesions, hair loss, and inflammation may indicate autoimmune condition" }
+                    ],
+                    category: "Dermatological Conditions"
                 }
             };
 
@@ -174,7 +191,9 @@ const ModuleHealth = {
                 'labored_breathing': 'respiratory',
                 'parasites': 'parasitic',
                 'hypothermia': 'environmental', 'hyperthermia': 'environmental',
-                'dehydration': 'environmental'
+                'dehydration': 'environmental',
+                'egg_binding': 'reproductive', 'crop_issues': 'reproductive',
+                'rashes': 'dermatological', 'feather_plucking': 'dermatological'
             };
 
             // Identify relevant categories based on symptoms

@@ -2,7 +2,16 @@
     "tiger": {
         "commonName": "Bengal Tiger",
         "scientificName": "Panthera tigris tigris",
-        "taxonomy": "Mammal",
+        "taxonomy": {
+            "kingdom": "Animalia",
+            "phylum": "Chordata",
+            "class": "Mammalia",
+            "order": "Carnivora",
+            "family": "Felidae",
+            "genus": "Panthera",
+            "species": "tigris",
+            "subspecies": "tigris"
+        },
         "group": "Large Mammals",
         "safetyType": "aggressive",
         "status": "Endangered (IUCN)",
